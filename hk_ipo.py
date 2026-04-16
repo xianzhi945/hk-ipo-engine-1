@@ -14,7 +14,7 @@ class hk_ipo:
 
         self.收益率历史参考 = pd.read_excel("详细申购手数收益.xlsx")
 
-    def 港股打新交易():
+    def 港股打新交易(self):
         ai_promot = '''
         代码：股票代码
         名称	：股票名称
@@ -46,8 +46,8 @@ class hk_ipo:
         集思录ipo数据 = pd.concat(集思录ipo数据)
         集思录ipo数据 = 集思录ipo数据[集思录ipo数据["代码"] > 0]
         申购中签详情 = pd.concat(
-            [pd.read_csv("D:/投资/港股IPO配发结果公告/" + i) for i in os.listdir("D:/投资/港股IPO配发结果公告") if i.endswith("csv")] + [
-                pd.read_excel("D:/投资/港股IPO配发结果公告/" + i) for i in os.listdir("D:/投资/港股IPO配发结果公告") if i.endswith("xls")]
+            [pd.read_csv("D:/GitWorkSpace/xianzhi9452/hk-ipo-engine/港股IPO配发结果公告/" + i) for i in os.listdir("D:/GitWorkSpace/xianzhi9452/hk-ipo-engine/港股IPO配发结果公告") if i.endswith("csv")] + [
+                pd.read_excel("D:/GitWorkSpace/xianzhi9452/hk-ipo-engine/港股IPO配发结果公告/" + i) for i in os.listdir("D:/GitWorkSpace/xianzhi9452/hk-ipo-engine/港股IPO配发结果公告") if i.endswith("xls")]
         )
         issues = []
         profits = []
@@ -86,7 +86,7 @@ class hk_ipo:
         profits.to_excel("详细申购手数收益.xlsx")
 
     def 收益率预测(self, target):
-        AH = target["AH"]
+        # AH = target["AH"]
         超购倍数 = target["超购倍数"]
         实际超购倍数近似 = abs(
             np.log(np.array(self.收益率历史参考['超购倍数'] / (self.收益率历史参考['回拨至'] / self.收益率历史参考['配售占比']) / 超购倍数)))
@@ -335,4 +335,6 @@ if __name__ == "__main__":
         }
     }
     results = self.致富融资最佳策略(hold_cash, targets)
+    self.港股打新交易()
+    self.收益率预测(targets)
     print(results[0])
